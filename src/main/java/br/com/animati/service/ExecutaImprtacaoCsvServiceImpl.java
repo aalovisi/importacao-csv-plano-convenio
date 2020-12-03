@@ -7,15 +7,22 @@ import br.com.animati.entity.PlanoConvenioProcedimento;
 import com.google.gson.Gson;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 
-public class ExecutaPrj {
+@Component
+public class ExecutaImprtacaoCsvServiceImpl {
 
-    public static void Executa(String sArqPatch) throws IOException {
+    @Autowired
+    private PlanoConvenioProcedimentoService planoConvenioProcedimentoService;
+
+    public void processar(String sArqPatch) throws IOException {
 
         if (!sArqPatch.substring(sArqPatch.lastIndexOf(".") + 1).toUpperCase().equals("CSV")) {
             JOptionPane.showMessageDialog(null, "Arquivo Inválido: " + sArqPatch);
@@ -94,14 +101,14 @@ public class ExecutaPrj {
         CoberturaPlanoCsv objPL = gson.fromJson(strJson, CoberturaPlanoCsv.class);
 
 
-        for (PlanoConvenioProcedimento lPlanoConv : objPL.getPlanoConvenioProcedimentos()){
-
+        for (PlanoConvenioProcedimento planoConvenioProcedimento : objPL.getPlanoConvenioProcedimentos()){
+            System.out.println(planoConvenioProcedimento.getId_procedimento());
         }
 
-        PlanoConvenioProcedimentoDAO ps = new PlanoConvenioProcedimentoDAOImpl();
-
-         ps.findAll();
-
+        List<PlanoConvenioProcedimento> planoConvenioProcedimentos = planoConvenioProcedimentoService.findAll();
+        for (PlanoConvenioProcedimento planoConvenioProcedimento : planoConvenioProcedimentos){
+            System.out.println(planoConvenioProcedimento.getId_plano_convenio_procedimento());
+        }
 
     }
 

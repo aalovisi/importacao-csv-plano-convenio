@@ -17,14 +17,14 @@ public class PlanoConvenioProcedimentoDAOImpl implements PlanoConvenioProcedimen
     public int save(PlanoConvenioProcedimento pcp) {
         return jdbcTemplate.update(
                 "insert into netris.plano_convenio_procedimento (id_plano_convenio_procedimento, ativo) values(?,?)",
-                pcp.getId_plano_convenio_rocedimento(), pcp.getAtivo());
+                pcp.getId_plano_convenio_procedimento(), pcp.getAtivo());
     }
 
     @Override
     public int update(PlanoConvenioProcedimento pcp) {
         return jdbcTemplate.update(
                 "update netris.plano_convenio_procedimento set ativo = ? where id_plano_convenio_procedimento = ?",
-                pcp.getAtivo(), pcp.getId_plano_convenio_rocedimento());
+                pcp.getAtivo(), pcp.getId_plano_convenio_procedimento());
     }
 
     @Override
