@@ -18,14 +18,5 @@ public class ImportacaoCsvPlanoConvenioApplication extends SpringBootServletInit
 		SpringApplication.run(ApplicationConfig.class, args);
 	}
 
-//	public static void main(String[] args) {
-//		SpringApplication.run(ImportacaoCsvPlanoConvenioApplication.class, args);
-//
-//		try {
-//			ExecutaPrj.Executa("d:/procedimento_plano_convenio.csv");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 }

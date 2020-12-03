@@ -14,7 +14,7 @@ public class PlanoConvenioProcedimento {
 
     @Id
     @GeneratedValue// (strategy = GenerationType.AUTO)
-    private long id_plano_convenio_rocedimento;
+    private long id_plano_convenio_procedimento;
 
     private String ativo;
     private String autorizacao;
@@ -31,5 +31,7 @@ public class PlanoConvenioProcedimento {
     private String permitir_agendamento;
 
     public PlanoConvenioProcedimento(long id_plano_convenio_procedimento, String ativo) {
+        this.id_plano_convenio_procedimento = id_plano_convenio_procedimento;
+        this.ativo = ativo;
     }
 }
