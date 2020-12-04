@@ -1,7 +1,5 @@
 package br.com.animati.service;
 
-import br.com.animati.dao.PlanoConvenioProcedimentoDAOImpl;
-import br.com.animati.dao.PlanoConvenioProcedimentoDAO;
 import br.com.animati.entity.CoberturaPlanoCsv;
 import br.com.animati.entity.PlanoConvenioProcedimento;
 import com.google.gson.Gson;
@@ -14,7 +12,6 @@ import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.List;
 
 @Component
 public class ExecutaImprtacaoCsvServiceImpl {
@@ -48,6 +45,9 @@ public class ExecutaImprtacaoCsvServiceImpl {
 
             json.append("{");
 
+            String id_plano_convenio_procedimento = record.get(0);
+            json.append("'id_plano_convenio_procedimento':'" + id_plano_convenio_procedimento + "',");
+
             String ativo = record.get(1);
             json.append("'ativo':'" + ativo + "',");
 
@@ -58,7 +58,7 @@ public class ExecutaImprtacaoCsvServiceImpl {
             json.append("'codigo_terminologia':'" + codigo_terminologia + "',");
 
             String data_atualizacao = record.get(4);
-            json.append("'data_atualizacao':'" + data_atualizacao + "',");
+            json.append("'data_atualizacao':null,");
 
             String material_obrigatorio = record.get(5);
             json.append("'material_obrigatorio':'" + material_obrigatorio + "',");
@@ -81,8 +81,13 @@ public class ExecutaImprtacaoCsvServiceImpl {
             String id_procedimento = record.get(11);
             json.append("'id_procedimento':'" + id_procedimento + "',");
 
+
             String id_usuario = record.get(12);
-            json.append("'id_usuario':'" + id_usuario + "',");
+            if (id_usuario.isEmpty()) {
+                json.append("'id_usuario':1,");
+            } else {
+                json.append("'id_usuario':'" + id_usuario + "',");
+            }
 
             String permitir_agendamento = record.get(13);
             json.append("'permitir_agendamento':'" + permitir_agendamento + "'");
@@ -100,14 +105,8 @@ public class ExecutaImprtacaoCsvServiceImpl {
         Gson gson = new Gson();
         CoberturaPlanoCsv objPL = gson.fromJson(strJson, CoberturaPlanoCsv.class);
 
-
-        for (PlanoConvenioProcedimento planoConvenioProcedimento : objPL.getPlanoConvenioProcedimentos()){
-            System.out.println(planoConvenioProcedimento.getId_procedimento());
-        }
-
-        List<PlanoConvenioProcedimento> planoConvenioProcedimentos = planoConvenioProcedimentoService.findAll();
-        for (PlanoConvenioProcedimento planoConvenioProcedimento : planoConvenioProcedimentos){
-            System.out.println(planoConvenioProcedimento.getId_plano_convenio_procedimento());
+        for (PlanoConvenioProcedimento oPCP : objPL.getPlanoConvenioProcedimentos()) {
+            planoConvenioProcedimentoService.save(oPCP);
         }
 
     }

@@ -16,15 +16,25 @@ public class PlanoConvenioProcedimentoDAOImpl implements PlanoConvenioProcedimen
     @Override
     public int save(PlanoConvenioProcedimento pcp) {
         return jdbcTemplate.update(
-                "insert into netris.plano_convenio_procedimento (id_plano_convenio_procedimento, ativo) values(?,?)",
-                pcp.getId_plano_convenio_procedimento(), pcp.getAtivo());
+                "insert into netris.plano_convenio_procedimento (id_plano_convenio_procedimento, ativo," +
+                        " autorizacao, codigo_terminologia," +
+                        " data_atualizacao, material_obrigatorio," +
+                        " tabela_terminologia, termo_terminologia," +
+                        " utiliza_pcp_material, utiliza_terminologia_especifica, id_plano_convenio," +
+                        " id_procedimento, id_usuario, permitir_agendamento) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                pcp.getId_plano_convenio_procedimento(), pcp.isAtivo(),
+        pcp.isAutorizacao(), pcp.getCodigo_terminologia(),
+                pcp.getData_atualizacao(), pcp.isMaterial_obrigatorio(),
+                pcp.getTermo_terminologia(), pcp.getTermo_terminologia(),
+                pcp.isUtiliza_pcp_material(), pcp.isUtiliza_terminologia_especifica(), pcp.getId_plano_convenio(),
+                pcp.getId_procedimento(), pcp.getId_usuario(), pcp.isPermitir_agendamento());
     }
 
     @Override
     public int update(PlanoConvenioProcedimento pcp) {
         return jdbcTemplate.update(
                 "update netris.plano_convenio_procedimento set ativo = ? where id_plano_convenio_procedimento = ?",
-                pcp.getAtivo(), pcp.getId_plano_convenio_procedimento());
+                pcp.isAtivo(), pcp.getId_plano_convenio_procedimento());
     }
 
     @Override
@@ -41,7 +51,19 @@ public class PlanoConvenioProcedimentoDAOImpl implements PlanoConvenioProcedimen
                 (rs, rowNum) ->
                         new PlanoConvenioProcedimento(
                                 rs.getLong("id_plano_convenio_procedimento"),
-                                rs.getString("ativo")
+                                rs.getBoolean("ativo"),
+                                rs.getBoolean("autorizacao"),
+                                rs.getString("codigo_terminologia"),
+                                rs.getDate("data_atualizacao"),
+                                rs.getBoolean("material_obrigatorio"),
+                                rs.getString("tabela_terminologia"),
+                                rs.getString("termo_terminologia"),
+                                rs.getBoolean("utiliza_pcp_material"),
+                                rs.getBoolean("utiliza_terminologia_especifica"),
+                                rs.getLong("id_plano_convenio"),
+                                rs.getLong("id_procedimento"),
+                                rs.getLong("id_usuario"),
+                                rs.getBoolean("permitir_agendamento")
                         )
         );
     }
@@ -54,7 +76,19 @@ public class PlanoConvenioProcedimentoDAOImpl implements PlanoConvenioProcedimen
                 (rs, rowNum) ->
                         new PlanoConvenioProcedimento(
                                 rs.getLong("id_plano_convenio_procedimento"),
-                                rs.getString("ativo")
+                                rs.getBoolean("ativo"),
+                                rs.getBoolean("autorizacao"),
+                                rs.getString("codigo_terminologia"),
+                                rs.getDate("data_atualizacao"),
+                                rs.getBoolean("material_obrigatorio"),
+                                rs.getString("tabela_terminologia"),
+                                rs.getString("termo_terminologia"),
+                                rs.getBoolean("utiliza_pcp_material"),
+                                rs.getBoolean("utiliza_terminologia_especifica"),
+                                rs.getLong("id_plano_convenio"),
+                                rs.getLong("id_procedimento"),
+                                rs.getLong("id_usuario"),
+                                rs.getBoolean("permitir_agendamento")
                         )
         );
     }

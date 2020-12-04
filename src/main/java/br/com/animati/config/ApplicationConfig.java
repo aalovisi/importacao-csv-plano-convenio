@@ -25,7 +25,8 @@ public class ApplicationConfig {
     @PostConstruct
     public void processarCsv(){
         try {
-            executaImportacaoCsvService.processar("d:/procedimento_plano_convenio.csv");
+            //executaImportacaoCsvService.processar("d:/procedimento_plano_convenio.csv");
+            executaImportacaoCsvService.processar("d:/pcp.csv");
         } catch (IOException e) {
             e.printStackTrace();
         }
