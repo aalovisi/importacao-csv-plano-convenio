@@ -5,28 +5,35 @@ import br.com.animati.entity.PlanoConvenioProcedimento;
 import com.google.gson.Gson;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
 @Component
-public class ExecutaImprtacaoCsvServiceImpl {
+public class ExecutarImprtacaoCsvServiceImpl implements ExecutarImprtacaoCsvService {
+
+    public static String STATIC_PATH_FILE_CSV = StringUtils.EMPTY;
 
     @Autowired
     private PlanoConvenioProcedimentoService planoConvenioProcedimentoService;
 
-    public void processar(String sArqPatch) throws IOException {
+    public void processar() throws IOException {
 
-        if (!sArqPatch.substring(sArqPatch.lastIndexOf(".") + 1).toUpperCase().equals("CSV")) {
-            JOptionPane.showMessageDialog(null, "Arquivo Inválido: " + sArqPatch);
+        if (StringUtils.isBlank(STATIC_PATH_FILE_CSV)){
+            System.out.println(" Não foi encontrado o path do arquivo como parametro");
             return;
         }
 
-        Reader in = new FileReader(sArqPatch);
+        if (!STATIC_PATH_FILE_CSV.substring(STATIC_PATH_FILE_CSV.lastIndexOf(".") + 1).toUpperCase().equals("CSV")) {
+            System.out.println(" Arquivo Inválido: "+STATIC_PATH_FILE_CSV);
+            return;
+        }
+
+        Reader in = new FileReader(STATIC_PATH_FILE_CSV);
 
         Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').parse(in);
 

@@ -1,6 +1,6 @@
 package br.com.animati.config;
 
-import br.com.animati.service.ExecutaImprtacaoCsvServiceImpl;
+import br.com.animati.service.ExecutarImprtacaoCsvServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,13 +20,12 @@ import java.io.IOException;
 public class ApplicationConfig {
 
     @Autowired
-    private ExecutaImprtacaoCsvServiceImpl executaImportacaoCsvService;
+    private ExecutarImprtacaoCsvServiceImpl executaImportacaoCsvService;
 
     @PostConstruct
     public void processarCsv(){
         try {
-            //executaImportacaoCsvService.processar("d:/procedimento_plano_convenio.csv");
-            executaImportacaoCsvService.processar("d:/pcp.csv");
+            executaImportacaoCsvService.processar();
         } catch (IOException e) {
             e.printStackTrace();
         }

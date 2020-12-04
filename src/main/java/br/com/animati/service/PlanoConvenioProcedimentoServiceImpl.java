@@ -14,8 +14,8 @@ public class PlanoConvenioProcedimentoServiceImpl implements PlanoConvenioProced
     private PlanoConvenioProcedimentoDAO planoConvenioProcedimentoDAO;
 
     @Override
-    public int save(PlanoConvenioProcedimento pcp) {
-        return planoConvenioProcedimentoDAO.save(pcp);
+    public void save(PlanoConvenioProcedimento pcp) {
+        planoConvenioProcedimentoDAO.save(pcp);
     }
 
     @Override

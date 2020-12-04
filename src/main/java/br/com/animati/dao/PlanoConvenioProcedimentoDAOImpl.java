@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -14,20 +17,33 @@ public class PlanoConvenioProcedimentoDAOImpl implements PlanoConvenioProcedimen
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public int save(PlanoConvenioProcedimento pcp) {
-        return jdbcTemplate.update(
-                "insert into netris.plano_convenio_procedimento (id_plano_convenio_procedimento, ativo," +
-                        " autorizacao, codigo_terminologia," +
-                        " data_atualizacao, material_obrigatorio," +
-                        " tabela_terminologia, termo_terminologia," +
-                        " utiliza_pcp_material, utiliza_terminologia_especifica, id_plano_convenio," +
-                        " id_procedimento, id_usuario, permitir_agendamento) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                pcp.getId_plano_convenio_procedimento(), pcp.isAtivo(),
-        pcp.isAutorizacao(), pcp.getCodigo_terminologia(),
-                pcp.getData_atualizacao(), pcp.isMaterial_obrigatorio(),
-                pcp.getTermo_terminologia(), pcp.getTermo_terminologia(),
-                pcp.isUtiliza_pcp_material(), pcp.isUtiliza_terminologia_especifica(), pcp.getId_plano_convenio(),
-                pcp.getId_procedimento(), pcp.getId_usuario(), pcp.isPermitir_agendamento());
+    public void save(PlanoConvenioProcedimento pcp) {
+
+        String sql = "insert into netris.plano_convenio_procedimento (id_plano_convenio_procedimento, ativo," +
+                " autorizacao, codigo_terminologia," +
+                " data_atualizacao, material_obrigatorio," +
+                " tabela_terminologia, termo_terminologia," +
+                " utiliza_pcp_material, utiliza_terminologia_especifica, id_plano_convenio," +
+                " id_procedimento, id_usuario, permitir_agendamento) values (nextval('netris.plano_convenio_procedimento_sequence'),?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+
+        List<Object[]> parametros = new ArrayList<>();
+        Object[] parametro = new Object[13];
+        parametro[0] = pcp.isAtivo();
+        parametro[1] = pcp.isAutorizacao();
+        parametro[2] = pcp.getCodigo_terminologia();
+        parametro[3] = pcp.getData_atualizacao();
+        parametro[4] = pcp.isMaterial_obrigatorio();
+        parametro[5] = pcp.getTermo_terminologia();
+        parametro[6] = pcp.getTermo_terminologia();
+        parametro[7] = pcp.isUtiliza_pcp_material();
+        parametro[8] = pcp.isUtiliza_terminologia_especifica();
+        parametro[9] = pcp.getId_plano_convenio();
+        parametro[10] = pcp.getId_procedimento();
+        parametro[11] = pcp.getId_usuario();
+        parametro[12] = pcp.isPermitir_agendamento();
+        parametros.add(parametro);
+        jdbcTemplate.batchUpdate(sql, parametros);
     }
 
     @Override

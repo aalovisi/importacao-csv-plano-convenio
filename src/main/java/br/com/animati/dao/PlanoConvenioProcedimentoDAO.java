@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PlanoConvenioProcedimentoDAO {
 
-    int save(PlanoConvenioProcedimento pcp);
+    void save(PlanoConvenioProcedimento pcp);
 
     int update(PlanoConvenioProcedimento pcp);
 
